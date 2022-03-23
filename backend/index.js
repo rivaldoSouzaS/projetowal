@@ -5,7 +5,7 @@ const pool = require('./db')
 
 app.use(express.json())
 
-function readExcel(rout){
+async function readExcel(rout){
     const workbook = XLSX.readFile(rout)
     const workbookSheets = workbook.SheetNames;
 
@@ -14,11 +14,27 @@ function readExcel(rout){
     const sheet = workbookSheets[0]
     const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
 
-    console.log(dataExcel[0].id)
+    //console.log(dataExcel[0].id)
 
+    const data = new Date();
+    const eficacia = 0;
+    validade = true;
+    
+    /*
+    const novaCampanha = await pool.query(
+        `INSERT INTO cliente(dataCampanha, eficacia, validade) VALUES ($1, $2, $3) RETURNING *`,[data, eficacia, validade]
+    )
+    
+    const clientes = await pool.query(
+        `INSERT INTO campanha(idCampanha, idTitulo, nome, vencimento, pago) VALUES ($1, $2, $3, $4, $5) RETURNING *`,[data, eficacia, validade]
+    )
+    */
+    
+    
     dataExcel.forEach(element => {
-        console.log(element.id +' '+element.nome)
+        console.log(element.idCampanha +' '+element.idTitulo, element.nome, element.vencimento, element.pago)
     });
+    
 }
 
 function padTo2Digits(num) {
@@ -43,7 +59,8 @@ app.post('/campanha', async (req, res) =>{
         const novaCampanha = await pool.query(
             `INSERT INTO campanha(dataCampanha, eficacia, validade) VALUES ($1, $2, $3) RETURNING *`,[data, eficacia, validade]
         )
-        res.json(novaCampanha)
+        res.json(novaCampanha.rows[0].id)
+        //res.send(novaCampanha.rows.id)
     } catch (error) {
         console.log(error);
     }

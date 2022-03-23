@@ -8,9 +8,9 @@ create table campanha(
 create table cliente(
     id serial primary key,
     idCampanha integer,
-    nome varchar(255),
     idTitulo integer,
+    nome varchar(255),
     vencimento varchar(255),
     pago boolean,
     FOREIGN KEY(idCampanha) REFERENCES campanha(id)
-)
+);
