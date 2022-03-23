@@ -21,19 +21,35 @@ function readExcel(rout){
     });
 }
 
-app.get('/campanha', async (req, res) =>{
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
+
+function  formatDate(date) {
+    return [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-');
+}
+
+app.post('/campanha', async (req, res) =>{
     try {
-        const result = await pool.query('SELECT * FROM campanha')
-        res.json(result)
+        
+        const data = new Date();
+        const {eficacia} = req.body
+        const {validade} = req.body
+
+        const novaCampanha = await pool.query(
+            `INSERT INTO campanha(dataCampanha, eficacia, validade) VALUES ($1, $2, $3) RETURNING *`,[data, eficacia, validade]
+        )
+        res.json(novaCampanha)
     } catch (error) {
-        console.error(error.message)
+        console.log(error);
     }
-    
 })
 
 readExcel('baseDados.xlsx')
-
-
 
 app.listen('3000', ()=>{
     console.log('server running on port 3000');
