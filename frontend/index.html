@@ -7,9 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="http://localhost:3000/campanha/10" method="get">
+    <!--
+    <form action="http://localhost:3000/campanha" method="get">
         <input type="submit">
     </form>
+    -->
+    <input id="novaCampanha" type="button" value="Nova campanha">
+    <input id="carregarCampanha" type="button" value="Carregar campanha">
+    <div class="contentTable">
+        <table class="tableCampanha">
+            <header>
+              <th id="colunaId">Id</th>
+              <th id="colunaData">Data</th>
+              <th id="colunaEficacia">Eficacia</th>
+              <th id="colunaValidade">Validade</th>
+            </header>
+            <tbody class="corpoTabela">
+              <!--javascrip-->
+            </tbody>
+        </table>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>

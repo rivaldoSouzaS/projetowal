@@ -1,9 +1,11 @@
 const XLSX = require('xlsx')
 const express = require('express')
+const cors = require('cors')
 const app = express();
 const pool = require('./db')
 
 app.use(express.json())
+app.use(cors())
 
 async function readExcel(rout){
     const workbook = XLSX.readFile(rout)
@@ -27,7 +29,6 @@ async function readExcel(rout){
         
         await inserir(id.rows[0].id, dataExcel[index])
     }
-    
 }
 
 async function inserir(id, lista){
@@ -54,13 +55,18 @@ async function retornarCampanhasId(id){
 }
 
 app.post('/campanha', async (req, res) =>{
-    console.log("blz")
+    console.log("metodo post")
+    readExcel('baseDados.xlsx')
 })
 
 app.get('/campanha', async (req, res) =>{
-    console.log("ok")
-    const result = await retornarCampanhas()
-    res.json(result.rows);
+    
+    try {
+        const result = await retornarCampanhas()
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 app.get('/campanha/:id', async (req, res) =>{
@@ -72,7 +78,7 @@ app.get('/campanha/:id', async (req, res) =>{
 
 })
 
-//readExcel('baseDados.xlsx')
+
 
 app.listen('3000', ()=>{
     console.log('server running on port 3000');
