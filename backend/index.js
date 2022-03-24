@@ -39,12 +39,40 @@ async function inserir(id, lista){
     //console.log(id+ " " + lista.idCampanha);
 }
 
+async function retornarCampanhas(){
+    const campanhas =  pool.query(
+        `SELECT * FROM campanha`
+    )
+    return campanhas
+}
+
+async function retornarCampanhasId(id){
+    const campanhas =  pool.query(
+        `SELECT * FROM campanha WHERE id = ${id}`
+    )
+    return campanhas
+}
 
 app.post('/campanha', async (req, res) =>{
     console.log("blz")
 })
 
-readExcel('baseDados.xlsx')
+app.get('/campanha', async (req, res) =>{
+    console.log("ok")
+    const result = await retornarCampanhas()
+    res.json(result.rows);
+})
+
+app.get('/campanha/:id', async (req, res) =>{
+    console.log(req.params.id);
+    //console.log("ok")
+    //const result = await retornarCampanhasId(id)
+    //res.json(result.rows);
+    res.send();
+
+})
+
+//readExcel('baseDados.xlsx')
 
 app.listen('3000', ()=>{
     console.log('server running on port 3000');
