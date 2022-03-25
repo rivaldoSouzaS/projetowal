@@ -15,5 +15,11 @@ create table cliente(
     FOREIGN KEY(idCampanha) REFERENCES campanha(id)
 );
 
+create table retorno(
+    idRetorno serial primary key,
+    titulo integer,
+    nome varchar(255)
+);
+
 drop table cliente;
 drop table campanha;

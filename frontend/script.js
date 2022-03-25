@@ -16,8 +16,14 @@ const criarCampanha = async()=>{
     const result = await axios.post(`http://localhost:3000/campanha`);
 }
 
+const carregarRetorno = async()=>{
+  const result = await axios.post(`http://localhost:3000/retorno`);
+}
+
+coletar();
+
 document.getElementById('carregarCampanha').addEventListener('click', event =>{
-    coletar()
+    //coletar()
     coletarClientes()
 })
 
@@ -25,6 +31,10 @@ document.getElementById('novaCampanha').addEventListener('click', event =>{
     criarCampanha()
     coletar()
     //coletarClientes()
+})
+
+document.getElementById('carregarRetorno').addEventListener('click', event =>{
+  carregarRetorno()
 })
 
 function carregarTabela(dadosTabela){
