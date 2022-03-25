@@ -7,6 +7,70 @@ const pool = require('./db')
 app.use(express.json())
 app.use(cors())
 
+//------------------------------------------rotas-----------------------------------------------
+app.post('/campanha', async (req, res) =>{
+    console.log("metodo post")
+    readExcel('baseDados.xlsx')
+})
+
+app.get('/campanha', async (req, res) =>{
+    
+    try {
+        const result = await retornarCampanhas()
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/campanha/:id', async (req, res) =>{
+    console.log(req.params.id);
+    res.send();
+
+})
+
+app.get('/cliente', async (req, res) =>{
+    
+    try {
+        const result = await retornarClientes()
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+//------------------------------------------rotas-----------------------------------------------
+async function retornarCampanhas(){
+    const campanhas =  pool.query(
+        `SELECT * FROM campanha`
+    )
+    return campanhas
+}
+
+async function retornarClientes(){
+    const clientes =  pool.query(
+        `SELECT * FROM cliente`
+    )
+    return clientes
+}
+
+async function retornarCampanhasId(id){
+    const campanhas =  pool.query(
+        `SELECT * FROM campanha WHERE id = ${id}`
+    )
+    return campanhas
+}
+
+async function inserir(id, lista){
+    const clientes =  pool.query(
+        `INSERT INTO cliente (idCampanha, idTitulo, nome, vencimento, pago) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        [id, lista.idTitulo, lista.nome, lista.vencimento, lista.pago]
+    )
+
+    //console.log(id+ " " + lista.idCampanha);
+}
+
 async function readExcel(rout){
     const workbook = XLSX.readFile(rout)
     const workbookSheets = workbook.SheetNames;
@@ -31,54 +95,7 @@ async function readExcel(rout){
     }
 }
 
-async function inserir(id, lista){
-    const clientes =  pool.query(
-        `INSERT INTO cliente (idCampanha, idTitulo, nome, vencimento, pago) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-        [id, lista.idTitulo, lista.nome, lista.vencimento, lista.pago]
-    )
-
-    //console.log(id+ " " + lista.idCampanha);
-}
-
-async function retornarCampanhas(){
-    const campanhas =  pool.query(
-        `SELECT * FROM campanha`
-    )
-    return campanhas
-}
-
-async function retornarCampanhasId(id){
-    const campanhas =  pool.query(
-        `SELECT * FROM campanha WHERE id = ${id}`
-    )
-    return campanhas
-}
-
-app.post('/campanha', async (req, res) =>{
-    console.log("metodo post")
-    readExcel('baseDados.xlsx')
-})
-
-app.get('/campanha', async (req, res) =>{
-    
-    try {
-        const result = await retornarCampanhas()
-        res.json(result.rows);
-    } catch (error) {
-        console.log(error)
-    }
-})
-
-app.get('/campanha/:id', async (req, res) =>{
-    console.log(req.params.id);
-    //console.log("ok")
-    //const result = await retornarCampanhasId(id)
-    //res.json(result.rows);
-    res.send();
-
-})
-
-
+//------------------------------------------------------------------------------------------------
 
 app.listen('3000', ()=>{
     console.log('server running on port 3000');

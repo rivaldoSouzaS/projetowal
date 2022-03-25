@@ -14,3 +14,6 @@ create table cliente(
     pago boolean,
     FOREIGN KEY(idCampanha) REFERENCES campanha(id)
 );
+
+drop table cliente;
+drop table campanha;
