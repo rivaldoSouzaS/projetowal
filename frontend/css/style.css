@@ -1,0 +1,52 @@
+.contentCamp {
+  display: flex;
+  border: 1px solid black;
+}
+.contentCamp .tableWrapper {
+  max-height: 100px;
+  overflow-y: scroll;
+  margin: 20px;
+}
+.contentCamp .tableWrapper .tableCampanha {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 800px;
+}
+.contentCamp .tableWrapper .tableCampanha th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  background-color: black;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+.contentCamp .tableWrapper .tableCampanha td {
+  padding-left: 20px;
+}
+
+.contentCli {
+  display: flex;
+  border: 1px solid black;
+  margin-top: 10px;
+}
+.contentCli .tableWrapper {
+  max-height: 100px;
+  overflow-y: scroll;
+  margin: 20px;
+  display: flex;
+}
+.contentCli .tableWrapper .tableCliente {
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 1500px;
+}
+.contentCli .tableWrapper .tableCliente th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  background-color: black;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=style.css.map */

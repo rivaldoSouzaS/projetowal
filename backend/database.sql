@@ -8,7 +8,8 @@ create table campanha(
 create table cliente(
     id serial primary key,
     idCampanha integer,
-    idTitulo integer,
+    colaborador varchar(255),
+    idTitulo integer not null,
     nome varchar(255),
     vencimento varchar(255),
     pago boolean,
@@ -17,9 +18,25 @@ create table cliente(
 
 create table retorno(
     idRetorno serial primary key,
-    titulo integer,
-    nome varchar(255)
+    campanha integer not null,
+    titulo integer not null,
+    nome varchar(255),
+    FOREIGN KEY(campanha) REFERENCES campanha(id)
 );
 
+select ca.dataCampanha, ca.id, c.colaborador, c.nome 
+from cliente c, retorno r, campanha ca
+where c.idtitulo = r.titulo and ca.id = 1;
+
+select ca.dataCampanha, ca.id, c.colaborador, c.nome 
+from cliente c, retorno r, campanha ca
+where c.idtitulo = r.titulo and c.colaborador LIKE 'MAYARA NUNES DA SILVA SANTOS' and ca.id = 1;
+
+select c.idtitulo, r.titulo from cliente c, retorno r
+where c.idtitulo = r.titulo;
+
+select count(*) from retorno;
+
+drop table retorno;
 drop table cliente;
 drop table campanha;

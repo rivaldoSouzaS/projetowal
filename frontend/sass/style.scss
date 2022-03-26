@@ -1,0 +1,62 @@
+body{
+    //background-color: red;
+}
+
+.contentCamp{
+    //background-color: green;
+    display: flex;
+    border: 1px solid black;
+    .tableWrapper{
+        max-height: 100px;
+        overflow-y: scroll;
+        margin: 20px;
+        .tableCampanha{
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 800px;
+            
+            
+            th{
+                position: sticky;
+                top: 0px;
+                background-color: black;
+                color: white;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            td{
+                padding-left: 20px;
+            }
+            
+        }
+    }
+}
+
+.contentCli{
+    display: flex;
+    border: 1px solid black;
+    margin-top: 10px;
+    .tableWrapper{
+        max-height: 100px;
+        overflow-y: scroll;
+        margin: 20px;
+        display: flex;
+
+        .tableCliente{
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 1500px;
+
+            th{
+                position: sticky;
+                top: 0px;
+                background-color: black;
+                color: white;
+                justify-content: center;
+                align-items: center;
+            }
+            
+        }
+    }
+}

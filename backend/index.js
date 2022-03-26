@@ -8,14 +8,32 @@ app.use(express.json())
 app.use(cors())
 
 //------------------------------------------rotas-----------------------------------------------
-app.post('/campanha', async (req, res) =>{
+app.post('/cliente/:id', async (req, res) =>{
     //console.log("metodo post")
-    readExcel('baseDados.xlsx')
+    const id = req.params.id
+    //console.log(id)
+    readExcelClientes(id, 'baseDados.xlsx')
 })
 
-app.post('/retorno', async (req, res) =>{
+app.post('/campanha', async (req, res) =>{
+    const id = criarCampanha()
+    res.send(id);
+})
+
+app.post('/retorno/:id', async (req, res) =>{
     //console.log("metodo post")
-    readExcelRetorno('relatorio.xlsx')
+    const id = req.params.id
+    readExcelRetorno(id, 'relatorio.xlsx')
+})
+
+app.get('/campanha', async (req, res) =>{
+    
+    try {
+        const result = await retornarCampanhas()
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 app.get('/campanha', async (req, res) =>{
@@ -67,47 +85,50 @@ async function retornarCampanhasId(id){
 }
 
 async function inserir(id, lista){
+    
     const clientes =  pool.query(
-        `INSERT INTO cliente (idCampanha, idTitulo, nome, vencimento, pago) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-        [id, lista.idTitulo, lista.nome, lista.vencimento, lista.pago]
+        `INSERT INTO cliente (idCampanha, colaborador, idTitulo, nome, vencimento, pago) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+        [id, lista.Colaborador, lista.IDTitulo, lista.Cliente, lista.Vencimento, false]
     )
+    
 }
 
-async function inserirRetorno(lista){
+async function inserirRetorno(id, lista){
     //console.log(lista.Cliente);
     
     const clientes =  pool.query(
-        `INSERT INTO retorno (titulo, nome) VALUES ($1, $2) RETURNING *`,
-        [lista.ID, lista.Cliente]
+        `INSERT INTO retorno (campanha, titulo, nome) VALUES ($1, $2, $3) RETURNING *`,
+        [id, lista.ID, lista.Cliente]
     )
     
 }
 
-async function readExcel(rout){
-    const workbook = XLSX.readFile(rout)
-    const workbookSheets = workbook.SheetNames;
-
-    const sheet = workbookSheets[0]
-    const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
-
+async function criarCampanha(){
     const data = new Date();
     const eficacia = 0;
     validade = true;
-
-    
     const id = await pool.query(
         `INSERT INTO campanha(dataCampanha, eficacia, validade) VALUES ($1, $2, $3) RETURNING *`,[data, eficacia, validade]
     )
+    return id;
+}
+
+async function readExcelClientes(id, rout){
+    const workbook = XLSX.readFile(rout)
+    const workbookSheets = workbook.SheetNames;
+    const sheet = workbookSheets[0]
+    const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
 
     //console.log(id.rows[0].id)
 
     for (let index = 0; index < dataExcel.length; index++) {
         
-        await inserir(id.rows[0].id, dataExcel[index])
+        await inserir(id, dataExcel[index])
     }
+    //await inserir(id.rows[0].id, dataExcel[index])
 }
 
-async function readExcelRetorno(rout){
+async function readExcelRetorno(id, rout){
     const workbook = XLSX.readFile(rout)
     const workbookSheets = workbook.SheetNames;
 
@@ -116,7 +137,7 @@ async function readExcelRetorno(rout){
 
     for (let index = 0; index < dataExcel.length; index++) {
         
-        await inserirRetorno(dataExcel[index])
+        await inserirRetorno(id, dataExcel[index])
     }
 }
 

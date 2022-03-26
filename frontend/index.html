@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -13,10 +14,12 @@
     </form>
     -->
     <input id="novaCampanha" type="button" value="Nova campanha">
-    <input id="carregarCampanha" type="button" value="Carregar tabelas">
+    <input id="carregarClientes" type="button" value="Carregar clientes">
     <input id="carregarRetorno" type="button" value="Carregar retorno">
-    <div class="contentTable">
-        <table class="tableCampanha">
+
+    <div class="contentCamp">
+        <div class="tableWrapper">
+          <table class="tableCampanha">
             <header>
               <th id="colunaId">Id</th>
               <th id="colunaData">Data</th>
@@ -26,22 +29,30 @@
             <tbody class="corpoTabela">
               <!--javascrip-->
             </tbody>
-        </table>
-
-        <table class="tableCliente">
-            <header>
-              <th id="colunaIdCli">Id</th>
-              <th id="colunaidCam">Id campanha</th>
-              <th id="colunaTitulo">Id Titulo</th>
-              <th id="colunaNome">Nome</th>
-              <th id="colunaVencimento">Vencimento</th>
-              <th id="colunaPago">Pago</th>
-            </header>
-            <tbody class="corpoTabelaCli">
-              <!--javascrip-->
-            </tbody>
-        </table>
+          </table>
+        </div>
     </div>
+
+    <div class="contentCli">
+      <div class="tableWrapper">
+        <table class="tableCliente">
+          <header>
+            <th id="colunaIdCli">Id</th>
+            <th id="colunaidCam">Id campanha</th>
+            <th id="colunaidCam">Colaborador</th>
+            <th id="colunaTitulo">Id Titulo</th>
+            <th id="colunaNome">Nome</th>
+            <th id="colunaVencimento">Vencimento</th>
+            <th id="colunaPago">Pago</th>
+          </header>
+          <tbody class="corpoTabelaCli">
+            <!--javascrip-->
+          </tbody>
+      </div>
+      </table>
+    </div>
+        
+    
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
