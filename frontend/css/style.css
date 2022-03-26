@@ -31,7 +31,7 @@
   margin-top: 10px;
 }
 .contentCli .tableWrapper {
-  max-height: 100px;
+  max-height: 300px;
   overflow-y: scroll;
   margin: 20px;
   display: flex;

@@ -1,5 +1,6 @@
-var tbody = document.querySelector(".corpoTabela");
-var tbodyCli = document.querySelector(".corpoTabelaCli");
+let tbody = document.querySelector(".corpoTabela");
+let tbodyCli = document.querySelector(".corpoTabelaCli");
+
 let idcampanha = 0;
 
 const coletar = async()=>{
@@ -45,7 +46,7 @@ document.getElementById('carregarRetorno').addEventListener('click', event =>{
 
 function carregarTabela(dadosTabela){
     //console.log(dadosTabela)
-  var tr = '';
+  let tr = '';
     
   for (let index = 0; index < dadosTabela.length; index++) {
     //console.log(dadosTabela[0].id)
@@ -58,7 +59,6 @@ function carregarTabela(dadosTabela){
     tr += '</tr>';
       
   }
-    
   tbody.innerHTML = tr;
 }
 
@@ -77,27 +77,39 @@ function desmarcarLinhasTabela(){
   }
 }
 
-
 function carregarTabelaCliente(dadosTabela){
     //console.log(dadosTabela)
-    var tr = '';
+    let trCli = '';
     
     for (let index = 0; index < dadosTabela.length; index++) {
-        //console.log(dadosTabela[0].id)
         
-      tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
+        trCli += '<tr onClick="selecionarCli('+index+')" id='+index+'>';
       
-        tr += '<td>' + dadosTabela[index].id + '</td>';
-        tr += '<td>' + dadosTabela[index].idcampanha + '</td>';
-        tr += '<td>' + dadosTabela[index].colaborador + '</td>';
-        tr += '<td>' + dadosTabela[index].idtitulo+ '</td>';
-        tr += '<td>' + dadosTabela[index].nome + '</td>';
-        tr += '<td>' + dadosTabela[index].vencimento + '</td>';
-        tr += '<td>' + dadosTabela[index].pago + '</td>';
+        trCli += '<td>' + dadosTabela[index].id + '</td>';
+          trCli += '<td>' + dadosTabela[index].idcampanha + '</td>';
+          trCli += '<td>' + dadosTabela[index].colaborador + '</td>';
+          trCli += '<td>' + dadosTabela[index].idtitulo+ '</td>';
+          trCli += '<td>' + dadosTabela[index].nome + '</td>';
+          trCli += '<td>' + dadosTabela[index].vencimento + '</td>';
+          trCli += '<td>' + dadosTabela[index].pago + '</td>';
+        trCli += '</tr>';
         
-      tr += '</tr>';
-      
     }
+    tbodyCli.innerHTML = trCli;
+}
+
+function selecionarCli(_id){
+  console.log("ok")
+  desmarcarLinhasTabelaCli()
+  var row = document.getElementById(_id);
+  row.style.backgroundColor = "rgba(96, 190, 72, 0.39)";
+  idcampanha = row.firstChild.textContent;
+  console.log("tabela cliente"+ idcampanha)
+}
+
+function desmarcarLinhasTabelaCli(){
+  for (let index = 0; index < tbodyCli.rows.length; index++) {
     
-    tbodyCli.innerHTML = tr;
+    tbodyCli.rows[index].style.backgroundColor = "white";
+  }
 }

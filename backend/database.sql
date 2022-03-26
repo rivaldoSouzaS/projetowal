@@ -24,6 +24,10 @@ create table retorno(
     FOREIGN KEY(campanha) REFERENCES campanha(id)
 );
 
+select * from cliente c, retorno r where c.idTitulo = r.titulo;
+
+update cliente set pago = true where id = 1;
+
 select ca.dataCampanha, ca.id, c.colaborador, c.nome 
 from cliente c, retorno r, campanha ca
 where c.idtitulo = r.titulo and ca.id = 1;

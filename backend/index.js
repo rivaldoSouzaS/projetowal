@@ -113,6 +113,18 @@ async function criarCampanha(){
     return id;
 }
 
+async function clientesPago(){
+ const result = await pool.query(`select * from cliente c, retorno r where c.idTitulo = r.titulo;`)
+ return result;  
+}
+
+async function marcarPago(lista){
+    console.log("ok")
+    for (let index = 0; index < lista.rows.length; index++) {
+        const result = await pool.query(`UPDATE cliente SET pago = $1 WHERE id = $2;`,[true, lista.rows[index].id])
+    }
+}
+
 async function readExcelClientes(id, rout){
     const workbook = XLSX.readFile(rout)
     const workbookSheets = workbook.SheetNames;
@@ -128,6 +140,8 @@ async function readExcelClientes(id, rout){
     //await inserir(id.rows[0].id, dataExcel[index])
 }
 
+
+
 async function readExcelRetorno(id, rout){
     const workbook = XLSX.readFile(rout)
     const workbookSheets = workbook.SheetNames;
@@ -139,6 +153,9 @@ async function readExcelRetorno(id, rout){
         
         await inserirRetorno(id, dataExcel[index])
     }
+    const lista = await clientesPago();
+    //console.log(lista.rows[0].id);
+    await marcarPago(lista)
 }
 
 //------------------------------------------------------------------------------------------------
