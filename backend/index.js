@@ -9,10 +9,17 @@ app.use(cors())
 
 //------------------------------------------rotas-----------------------------------------------
 app.post('/cliente/:id', async (req, res) =>{
-    //console.log("metodo post")
+
     const id = req.params.id
-    //console.log(id)
-    readExcelClientes(id, 'baseDados.xlsx')
+    const quantidade = await quantClientes(id);
+    console.log(quantidade + "aqui")
+    if(quantidade <= 0){
+        readExcelClientes(id, 'baseDados.xlsx')
+        res.send(quantidade)
+    }
+    else{
+        res.send(quantidade);
+    }
 })
 
 app.post('/campanha', async (req, res) =>{
@@ -24,6 +31,7 @@ app.post('/retorno/:id', async (req, res) =>{
     //console.log("metodo post")
     const id = req.params.id
     readExcelRetorno(id, 'relatorio.xlsx')
+    res.send()
 })
 
 app.get('/campanha', async (req, res) =>{
@@ -62,6 +70,17 @@ app.get('/cliente', async (req, res) =>{
     }
 })
 
+app.get('/cliente/pago/:id', async (req, res) =>{
+    
+    try {
+        const id = req.params.id
+        const result = await retornarClientesPago(id)
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 //------------------------------------------rotas-----------------------------------------------
 async function retornarCampanhas(){
     const campanhas =  pool.query(
@@ -73,6 +92,22 @@ async function retornarCampanhas(){
 async function retornarClientes(){
     const clientes =  pool.query(
         `SELECT * FROM cliente`
+    )
+    return clientes
+}
+
+async function quantClientes(idCampanha){
+    const qtd = await pool.query(
+        `select count(*) from cliente c, campanha ca where c.idCampanha = ca.id and ca.id = ${idCampanha};`
+
+    )
+    //console.log(qtd.rows[0].count)
+    return qtd.rows[0].count;
+}
+
+async function retornarClientesPago(idcampanha){
+    const clientes =  pool.query(
+            `SELECT * FROM cliente WHERE PAGO = true and cliente.idcampanha = ${idcampanha};`
     )
     return clientes
 }
@@ -130,17 +165,14 @@ async function readExcelClientes(id, rout){
     const workbookSheets = workbook.SheetNames;
     const sheet = workbookSheets[0]
     const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
-
-    //console.log(id.rows[0].id)
-
+    
     for (let index = 0; index < dataExcel.length; index++) {
         
         await inserir(id, dataExcel[index])
     }
-    //await inserir(id.rows[0].id, dataExcel[index])
+    
+   console.log(dataExcel);
 }
-
-
 
 async function readExcelRetorno(id, rout){
     const workbook = XLSX.readFile(rout)

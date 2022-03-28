@@ -14,12 +14,44 @@ const coletarClientes = async()=>{
     //console.log(result)
 }
 
+const coletarClientesPago = async()=>{
+  
+  if(idcampanha !== 0){
+    const result = await axios.get(`http://localhost:3000/cliente/pago/${idcampanha}`);
+    carregarTabelaCliente(result.data)
+  }
+  else{
+    alert("selecione uma campanha!")
+  }
+} 
+
 const carregarClientes = async()=>{
+  if(idcampanha !== 0){
+    
     const result = await axios.post(`http://localhost:3000/cliente/${idcampanha}`);
+    if(result.data !== 0){
+      alert('Campanha ja possui clientes')
+    }
+    else{
+      alert('Clientes importados')
+    }
+    idcampanha = 0;
+  }
+  else{
+    alert("selecione uma campanha!")
+  }
+  desmarcarLinhasTabela()
 }
 
 const carregarRetorno = async()=>{
-  const result = await axios.post(`http://localhost:3000/retorno/${idcampanha}`);
+  console.log("ok")
+  if(idcampanha !== 0){
+    const result = await axios.post(`http://localhost:3000/retorno/${idcampanha}`);
+    idcampanha = 0;
+  }
+  else{
+    alert("selecione uma campanha!")
+  }
 }
 
 const criarCampanha = async()=>{
@@ -42,6 +74,10 @@ document.getElementById('novaCampanha').addEventListener('click', event =>{
 
 document.getElementById('carregarRetorno').addEventListener('click', event =>{
   carregarRetorno()
+})
+
+document.getElementById('pagamentoOk').addEventListener('click', event =>{
+  coletarClientesPago()
 })
 
 function carregarTabela(dadosTabela){
@@ -83,7 +119,7 @@ function carregarTabelaCliente(dadosTabela){
     
     for (let index = 0; index < dadosTabela.length; index++) {
         
-        trCli += '<tr onClick="selecionarCli('+index+')" id='+index+'>';
+        trCli += '<tr" id='+index+'>';
       
         trCli += '<td>' + dadosTabela[index].id + '</td>';
           trCli += '<td>' + dadosTabela[index].idcampanha + '</td>';
@@ -96,20 +132,4 @@ function carregarTabelaCliente(dadosTabela){
         
     }
     tbodyCli.innerHTML = trCli;
-}
-
-function selecionarCli(_id){
-  console.log("ok")
-  desmarcarLinhasTabelaCli()
-  var row = document.getElementById(_id);
-  row.style.backgroundColor = "rgba(96, 190, 72, 0.39)";
-  idcampanha = row.firstChild.textContent;
-  console.log("tabela cliente"+ idcampanha)
-}
-
-function desmarcarLinhasTabelaCli(){
-  for (let index = 0; index < tbodyCli.rows.length; index++) {
-    
-    tbodyCli.rows[index].style.backgroundColor = "white";
-  }
 }
