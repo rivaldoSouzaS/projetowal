@@ -28,6 +28,8 @@ select * from cliente c, retorno r where c.idTitulo = r.titulo;
 
 update cliente set pago = true where id = 1;
 
+update cliente set pago = true from retorno where retorno.titulo = cliente.idtitulo;
+
 select ca.dataCampanha, ca.id, c.colaborador, c.nome 
 from cliente c, retorno r, campanha ca
 where c.idtitulo = r.titulo and ca.id = 1;
@@ -35,9 +37,9 @@ where c.idtitulo = r.titulo and ca.id = 1;
 select ca.dataCampanha, ca.id, c.colaborador, c.nome 
 from cliente c, retorno r, campanha ca
 where c.idtitulo = r.titulo and c.colaborador LIKE 'MAYARA NUNES DA SILVA SANTOS' and ca.id = 1;
+select * from cliente c, retorno r where c.idtitulo = r.titulo and c.colaborador like 'MAYARA NUNES DA SILVA SANTOS';
 
 SELECT * FROM cliente WHERE cliente.colaborador Ilike 'MAYARA NUNES DA SILVA SANTOS';
-
 
 select c.idtitulo, r.titulo from cliente c, retorno r
 where c.idtitulo = r.titulo;

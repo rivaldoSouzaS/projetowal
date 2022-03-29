@@ -85,14 +85,14 @@ app.get('/cliente/:nome/:id', async (req, res) =>{
     try {
         const id = req.params.id
         const nome = req.params.nome
-        console.log(id+" "+nome);
+        //console.log(id+" "+nome);
         const result = await retornarPorColab(nome, id)
+        console.log(result.rowCount+" CODIGO EXPRESS");
         res.json(result.rows);
     } catch (error) {
         console.log(error)
     }
 })
-
 
 //------------------------------------------rotas-----------------------------------------------
 async function retornarCampanhas(){
@@ -112,15 +112,15 @@ async function retornarClientes(){
 async function quantClientes(idCampanha){
     const qtd = await pool.query(
         `select count(*) from cliente c, campanha ca where c.idCampanha = ca.id and ca.id = ${idCampanha};`
-
     )
     //console.log(qtd.rows[0].count)
     return qtd.rows[0].count;
 }
 
 async function retornarClientesPago(idcampanha){
+    const result = await marcarPago();
     const clientes =  pool.query(
-            `SELECT * FROM cliente WHERE PAGO = true and cliente.idcampanha = ${idcampanha};`
+            `SELECT * FROM cliente WHERE PAGO = true and cliente.idcampanha = ${idcampanha} ORDER BY cliente.colaborador ASC;`
     )
     return clientes
 }
@@ -128,6 +128,7 @@ async function retornarClientesPago(idcampanha){
 async function retornarPorColab(nomeColab, idCampanha){
     //const result = await pool.query(`SELECT * FROM cliente WHERE cliente.colaborador Ilike '%ANTONIO CARLOS PEREIRA SOARES%';`)
     const result = await pool.query(`SELECT * FROM cliente WHERE cliente.colaborador Ilike '%${nomeColab}%';`)
+    console.log(result.rowCount+" CODIGO SQL");
     return result
 }
 
@@ -166,17 +167,14 @@ async function criarCampanha(){
     )
     return id;
 }
-
+/*
 async function clientesPago(){
  const result = await pool.query(`select * from cliente c, retorno r where c.idTitulo = r.titulo;`)
  return result;  
 }
-
-async function marcarPago(lista){
-    //console.log("ok")
-    for (let index = 0; index < lista.rows.length; index++) {
-        const result = await pool.query(`UPDATE cliente SET pago = $1 WHERE id = $2;`,[true, lista.rows[index].id])
-    }
+*/
+async function marcarPago(){
+    const result = await pool.query(`update cliente set pago = true from retorno where cliente.idtitulo = retorno.titulo`)
 }
 
 async function readExcelClientes(id, rout){
@@ -204,9 +202,6 @@ async function readExcelRetorno(id, rout){
         
         await inserirRetorno(id, dataExcel[index])
     }
-    const lista = await clientesPago();
-    //console.log(lista.rows[0].id);
-    await marcarPago(lista)
 }
 
 //------------------------------------------------------------------------------------------------

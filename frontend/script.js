@@ -44,11 +44,11 @@ const carregarClientes = async()=>{
 }
 
 const carregarClientesPorColab = async()=>{
-  console.log("ok")
+  //console.log("ok")
   const nomeColaborador = document.getElementById('nomeColab').value
-  console.log(nomeColaborador);
+  //console.log(nomeColaborador);
   const result = await axios.get(`http://localhost:3000/cliente/${nomeColaborador}/${idcampanha}`);
-  console.log(result)
+  carregarTabelaCliente(result.data)
 }
 
 const carregarRetorno = async()=>{
@@ -86,6 +86,7 @@ document.getElementById('carregarRetorno').addEventListener('click', event =>{
 
 document.getElementById('pagamentoOk').addEventListener('click', event =>{
   coletarClientesPago()
+  desmarcarLinhasTabela()
 })
 
 document.getElementById('buscar').addEventListener('click', event =>{
@@ -128,7 +129,7 @@ function desmarcarLinhasTabela(){
 function carregarTabelaCliente(dadosTabela){
     //console.log(dadosTabela)
     let trCli = '';
-    
+    calcularEficacia(dadosTabela)
     for (let index = 0; index < dadosTabela.length; index++) {
         
         trCli += '<tr" id='+index+'>';
@@ -143,5 +144,23 @@ function carregarTabelaCliente(dadosTabela){
         trCli += '</tr>';
         
     }
-    tbodyCli.innerHTML = trCli;
+  tbodyCli.innerHTML = trCli;
+}
+
+function calcularEficacia(dadosTabela){
+  console.log(dadosTabela.length)
+  let count = 0;
+  let quant = dadosTabela.length;
+
+  for (let index = 0; index < dadosTabela.length; index++) {
+    if(dadosTabela[index].pago === true){
+      count = count + 1;
+      console.log(dadosTabela[index].nome)
+    }
+    
+  }
+  let eficacia = (count * 100) / quant
+  document.getElementById('total').textContent = quant
+  document.getElementById('pago').textContent = count
+  document.getElementById('eficacia').textContent = parseInt(eficacia) +"%"
 }

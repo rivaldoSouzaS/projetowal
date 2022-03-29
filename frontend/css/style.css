@@ -29,9 +29,10 @@
 .contentCli {
   display: flex;
   border: 1px solid black;
+  margin-bottom: 10px;
 }
 .contentCli .tableWrapper {
-  max-height: 300px;
+  max-height: 280px;
   overflow-y: scroll;
   margin: 20px;
   display: flex;
@@ -49,4 +50,23 @@
   color: white;
   justify-content: center;
   align-items: center;
+}
+
+#resultado {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 50px 0px 50px;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+#resultado .display {
+  display: flex;
+  flex-direction: row;
+}
+#resultado .display span {
+  margin-top: 23px;
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
 }/*# sourceMappingURL=style.css.map */

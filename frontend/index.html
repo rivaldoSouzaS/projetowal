@@ -35,6 +35,7 @@
     <input id="pagamentoOk" type="button" value="Pagamento ok">
     <input id="nomeColab" type="text" placeholder="Colaborador">
     <input id="buscar" type="button" value="Buscar">
+
     <div class="contentCli">
       <div class="tableWrapper">
         <table class="tableCliente">
@@ -50,12 +51,25 @@
           <tbody id="tabelaCliente" class="corpoTabelaCli">
             <!--javascrip-->
           </tbody>
+        </table>
       </div>
-      </table>
     </div>
-        
-    
 
+    <div id="resultado">
+      <div class="display">
+        <h2>Total:</h2>
+        <span id="total">Resultado</span>
+      </div>
+      <div class="display">
+        <h2>Pago:</h2>
+        <span id="pago">Resultado</span>
+      </div>
+      <div class="display">
+        <h2>Eficacia:</h2>
+        <span id="eficacia">Resultado</span>
+      </div>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>
