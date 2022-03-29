@@ -43,6 +43,14 @@ const carregarClientes = async()=>{
   desmarcarLinhasTabela()
 }
 
+const carregarClientesPorColab = async()=>{
+  console.log("ok")
+  const nomeColaborador = document.getElementById('nomeColab').value
+  console.log(nomeColaborador);
+  const result = await axios.get(`http://localhost:3000/cliente/${nomeColaborador}/${idcampanha}`);
+  console.log(result)
+}
+
 const carregarRetorno = async()=>{
   console.log("ok")
   if(idcampanha !== 0){
@@ -78,6 +86,10 @@ document.getElementById('carregarRetorno').addEventListener('click', event =>{
 
 document.getElementById('pagamentoOk').addEventListener('click', event =>{
   coletarClientesPago()
+})
+
+document.getElementById('buscar').addEventListener('click', event =>{
+  carregarClientesPorColab()
 })
 
 function carregarTabela(dadosTabela){

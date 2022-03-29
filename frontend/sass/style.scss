@@ -6,6 +6,7 @@ body{
     //background-color: green;
     display: flex;
     border: 1px solid black;
+    margin-bottom: 10px;
     .tableWrapper{
         max-height: 100px;
         overflow-y: scroll;
@@ -36,7 +37,6 @@ body{
 .contentCli{
     display: flex;
     border: 1px solid black;
-    margin-top: 10px;
     .tableWrapper{
         max-height: 300px;
         overflow-y: scroll;

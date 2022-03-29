@@ -36,6 +36,9 @@ select ca.dataCampanha, ca.id, c.colaborador, c.nome
 from cliente c, retorno r, campanha ca
 where c.idtitulo = r.titulo and c.colaborador LIKE 'MAYARA NUNES DA SILVA SANTOS' and ca.id = 1;
 
+SELECT * FROM cliente WHERE cliente.colaborador Ilike 'MAYARA NUNES DA SILVA SANTOS';
+
+
 select c.idtitulo, r.titulo from cliente c, retorno r
 where c.idtitulo = r.titulo;
 

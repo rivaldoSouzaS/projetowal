@@ -1,6 +1,7 @@
 .contentCamp {
   display: flex;
   border: 1px solid black;
+  margin-bottom: 10px;
 }
 .contentCamp .tableWrapper {
   max-height: 100px;
@@ -28,7 +29,6 @@
 .contentCli {
   display: flex;
   border: 1px solid black;
-  margin-top: 10px;
 }
 .contentCli .tableWrapper {
   max-height: 300px;
