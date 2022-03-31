@@ -9,9 +9,8 @@ const coletar = async()=>{
 }
 
 const coletarClientes = async()=>{
-    const result = await axios.get(`http://localhost:3000/cliente`);
-    carregarTabelaCliente(result.data)
-    //console.log(result)
+  const result = await axios.get(`http://localhost:3000/cliente`);
+  carregarTabelaCliente(result.data)
 }
 
 const coletarClientesPago = async()=>{
@@ -44,15 +43,12 @@ const carregarClientes = async()=>{
 }
 
 const carregarClientesPorColab = async()=>{
-  //console.log("ok")
   const nomeColaborador = document.getElementById('nomeColab').value
-  //console.log(nomeColaborador);
   const result = await axios.get(`http://localhost:3000/cliente/${nomeColaborador}/${idcampanha}`);
   carregarTabelaCliente(result.data)
 }
 
 const carregarRetorno = async()=>{
-  console.log("ok")
   if(idcampanha !== 0){
     const result = await axios.post(`http://localhost:3000/retorno/${idcampanha}`);
     idcampanha = 0;
@@ -148,14 +144,13 @@ function carregarTabelaCliente(dadosTabela){
 }
 
 function calcularEficacia(dadosTabela){
-  console.log(dadosTabela.length)
+  //console.log(dadosTabela.length)
   let count = 0;
   let quant = dadosTabela.length;
 
   for (let index = 0; index < dadosTabela.length; index++) {
     if(dadosTabela[index].pago === true){
       count = count + 1;
-      console.log(dadosTabela[index].nome)
     }
     
   }

@@ -29,8 +29,12 @@ app.post('/campanha', async (req, res) =>{
 app.post('/retorno/:id', async (req, res) =>{
     //console.log("metodo post")
     const id = req.params.id
-    readExcelRetorno(id, 'relatorio.xlsx')
-    res.send()
+    try {
+        readExcelRetorno(id, 'relatorio.xlsx')
+        res.status(204).send()
+    } catch (error) {
+        res.status(500).send()
+    }
 })
 
 app.get('/campanha', async (req, res) =>{
@@ -76,7 +80,7 @@ app.get('/cliente/pago/:id', async (req, res) =>{
         const result = await retornarClientesPago(id)
         res.json(result.rows);
     } catch (error) {
-        console.log(error)
+        res.status(500).send(error)
     }
 })
 
@@ -85,9 +89,8 @@ app.get('/cliente/:nome/:id', async (req, res) =>{
     try {
         const id = req.params.id
         const nome = req.params.nome
-        //console.log(id+" "+nome);
         const result = await retornarPorColab(nome, id)
-        console.log(result.rowCount+" CODIGO EXPRESS");
+        //console.log(result.rowCount+" CODIGO EXPRESS");
         res.json(result.rows);
     } catch (error) {
         console.log(error)
@@ -192,9 +195,9 @@ async function readExcelClientes(id, rout){
 }
 
 async function readExcelRetorno(id, rout){
+
     const workbook = XLSX.readFile(rout)
     const workbookSheets = workbook.SheetNames;
-
     const sheet = workbookSheets[0]
     const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
 
