@@ -1,16 +1,23 @@
 let tbody = document.querySelector(".corpoTabela");
 let tbodyCli = document.querySelector(".corpoTabelaCli");
+let tbodyRetorno = document.querySelector(".corpoTabelaRetorno");
 
 let idcampanha = 0;
 
 const coletar = async()=>{
-    const result = await axios.get(`http://localhost:3000/campanha`);
-    carregarTabela(result.data)
+  const result = await axios.get(`http://localhost:3000/campanha`);
+  carregarTabela(result.data)
 }
 
 const coletarClientes = async()=>{
   const result = await axios.get(`http://localhost:3000/cliente`);
   carregarTabelaCliente(result.data)
+}
+
+const coletarRetorno = async()=>{
+  const result = await axios.get(`http://localhost:3000/retorno`);
+  console.log(result.data)
+  carregarTabelaRetorno(result.data);
 }
 
 const coletarClientesPago = async()=>{
@@ -59,7 +66,13 @@ const carregarRetorno = async()=>{
 }
 
 const criarCampanha = async()=>{
-  const result = await axios.post(`http://localhost:3000/campanha`);
+  const acmpanhas = await axios.get(`http://localhost:3000/campanha/valida`);
+  if(acmpanhas.data.length >= 1){
+    alert("Ja existe uma campanha valida")
+  }
+  else{
+    const result = await axios.post(`http://localhost:3000/campanha`);
+  }
 }
 
 coletar();
@@ -77,6 +90,12 @@ document.getElementById('novaCampanha').addEventListener('click', event =>{
 })
 
 document.getElementById('carregarRetorno').addEventListener('click', event =>{
+  //carregarRetorno()
+  toggleOverRetorno()
+  coletarRetorno()
+})
+
+document.getElementById('lerRetorno').addEventListener('click', event =>{
   carregarRetorno()
 })
 
@@ -89,6 +108,11 @@ document.getElementById('buscar').addEventListener('click', event =>{
   carregarClientesPorColab()
 })
 
+document.getElementById('sairRetorno').addEventListener("click", event=>{
+  console.log("ok")
+  toggleOverRetorno()
+})
+
 function carregarTabela(dadosTabela){
     //console.log(dadosTabela)
   let tr = '';
@@ -98,7 +122,7 @@ function carregarTabela(dadosTabela){
         
     tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
       tr += '<td>' + dadosTabela[index].id + '</td>';
-      tr += '<td>' + dadosTabela[index].datacampanha + '</td>';
+      tr += '<td>' + dadosTabela[index].datacampanha.substring(0, 10); + '</td>';
       tr += '<td>' + dadosTabela[index].eficacia+"%"+ '</td>';
       tr += '<td>' + dadosTabela[index].validade + '</td>';
     tr += '</tr>';
@@ -135,12 +159,27 @@ function carregarTabelaCliente(dadosTabela){
           trCli += '<td>' + dadosTabela[index].colaborador + '</td>';
           trCli += '<td>' + dadosTabela[index].idtitulo+ '</td>';
           trCli += '<td>' + dadosTabela[index].nome + '</td>';
-          trCli += '<td>' + dadosTabela[index].vencimento + '</td>';
+          trCli += '<td>' + dadosTabela[index].vencimento.substring(0, 10) + '</td>';
           trCli += '<td>' + dadosTabela[index].pago + '</td>';
         trCli += '</tr>';
         
     }
   tbodyCli.innerHTML = trCli;
+}
+
+function carregarTabelaRetorno(dadosTabela){
+  let trRet = '';
+  for (let index = 0; index < dadosTabela.length; index++) {
+      
+    trRet += '<tr" id='+index+'>';
+      trRet += '<td>' + dadosTabela[index].idretorno + '</td>';
+      trRet += '<td>' + dadosTabela[index].campanha + '</td>';
+      trRet += '<td>' + dadosTabela[index].titulo + '</td>';
+      trRet += '<td>' + dadosTabela[index].nome+ '</td>';
+      trRet += '<td>' + dadosTabela[index].dataretorno.substring(0, 10);+ '</td>';
+    trRet += '</tr>';
+  }
+  tbodyRetorno.innerHTML = trRet;
 }
 
 function calcularEficacia(dadosTabela){
@@ -158,4 +197,9 @@ function calcularEficacia(dadosTabela){
   document.getElementById('total').textContent = quant
   document.getElementById('pago').textContent = count
   document.getElementById('eficacia').textContent = parseInt(eficacia) +"%"
+}
+
+function toggleOverRetorno(){
+  const overRetorno = document.querySelector(".overRetorno");
+  overRetorno.classList.toggle("over_active");
 }

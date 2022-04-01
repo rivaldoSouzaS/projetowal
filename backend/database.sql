@@ -11,7 +11,7 @@ create table cliente(
     colaborador varchar(255),
     idTitulo integer not null,
     nome varchar(255),
-    vencimento varchar(255),
+    vencimento date,
     pago boolean,
     FOREIGN KEY(idCampanha) REFERENCES campanha(id)
 );
@@ -21,6 +21,7 @@ create table retorno(
     campanha integer not null,
     titulo integer not null,
     nome varchar(255),
+    dataRetorno date,
     FOREIGN KEY(campanha) REFERENCES campanha(id)
 );
 

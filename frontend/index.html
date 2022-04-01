@@ -5,25 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
+    <link rel="icon" type="imagem/png" href="img/financa.png" />
+
+    <title>Cobranças</title>
 </head>
 <body>
-    <!--
-    <form action="http://localhost:3000/campanha" method="get">
-        <input type="submit">
-    </form>
-    --> 
-    <input id="novaCampanha" type="button" value="Nova campanha">
-    <input id="carregarClientes" type="button" value="Carregar clientes">
-    <input id="carregarRetorno" type="button" value="Carregar retorno">
 
+  <header>
+    <nav>
+      <div class="contentNav">
+        <ul class="menu">
+          <li id="novaCampanha" class="menuItem">
+            Nova campanha
+          </li>
+          <li class="menuItem">
+            Encerrar campanha
+          </li>
+          <li id="carregarClientes" class="menuItem">
+            Carregar clientes
+          </li>
+          <li id="carregarRetorno" class="menuItem">
+            Retorno
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
     <div class="contentCamp">
         <div class="tableWrapper">
           <table class="tableCampanha">
             <header>
               <th id="colunaId">Id</th>
               <th id="colunaData">Data</th>
-              <th id="colunaEficacia">Eficacia</th>
+              <th id="colunaEficacia">Eficácia</th>
               <th id="colunaValidade">Validade</th>
             </header>
             <tbody id="tabelaCampanha" class="corpoTabela">
@@ -32,11 +46,26 @@
           </table>
         </div>
     </div>
-    <input id="pagamentoOk" type="button" value="Pagamento ok">
-    <input id="nomeColab" type="text" placeholder="Colaborador">
-    <input id="buscar" type="button" value="Buscar">
-
+    
     <div class="contentCli">
+
+      <div class="contentNav navPagamento">
+        <div>
+          <ul class="menu">
+            <li id="pagamentoOk" class="menuItem">
+              Verificar pagamento
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <input id="nomeColab" type="text" placeholder="Colaborador">
+          <input id="buscar" type="button" value="Buscar">
+        </div>
+        
+      </div>
+      
+      <!--tabela a baixo-->
       <div class="tableWrapper">
         <table class="tableCliente">
           <header>
@@ -65,9 +94,50 @@
         <span id="pago">Resultado</span>
       </div>
       <div class="display">
-        <h2>Eficacia:</h2>
+        <h2>Eficácia:</h2>
         <span id="eficacia">Resultado</span>
       </div>
+    </div>
+
+    <div class="overRetorno">
+
+      <div id="margem"> 
+        <div>
+          <img id="sairRetorno" src="img/__geKiQnSG-.png" alt="">
+        </div>
+      </div>
+
+      <div class="contentRetorno">
+        <div class="contentNav navPagamento">
+          <div>
+            <ul class="menu">
+              <li id="lerRetorno" class="menuItem">
+                Carregar retorno
+              </li>
+            </ul>
+          </div>
+  
+          <div>
+            <input id="dataRetorno" type="date" placeholder="yyy-mm-dd">
+            <input id="buscarData" type="button" value="Buscar">
+          </div>
+          
+        </div>
+        <div class="tableWrapperRetorno">
+          <table class="tableRetorno">
+            <header>
+              <th id="colunaId">Id</th>
+              <th id="colunaCampanha">Id campanha</th>
+              <th id="colunaTitulo">Id titulo</th>
+              <th id="colunaNome">Nome</th>
+              <th id="colunaNome">Data</th>
+            </header>
+            <tbody id="tabelaRetorno" class="corpoTabelaRetorno">
+              <!--javascrip-->
+            </tbody>
+          </table>
+        </div>
+    </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

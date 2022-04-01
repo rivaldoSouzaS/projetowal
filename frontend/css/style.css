@@ -1,6 +1,76 @@
+body {
+  background-color: rgba(0, 226, 169, 0.0549019608);
+}
+
+.contentNav {
+  background-color: #49be70;
+}
+.contentNav .menu {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  margin: 0px;
+  padding: 5px 0px 5px 0px;
+}
+.contentNav .menu .menuItem {
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 15px;
+  padding: 5px 5px 5px 5px;
+  cursor: pointer;
+}
+.contentNav .menu .menuItem:hover {
+  background-color: rgba(139, 247, 96, 0.8);
+  color: white;
+}
+.contentNav .menu .menuItem:first-child {
+  margin-left: 0px;
+}
+
+.navPagamento {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 5px;
+}
+.navPagamento input {
+  outline: none;
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: #49be70;
+  padding: 5px;
+}
+.navPagamento input:hover {
+  background-color: rgba(139, 247, 96, 0.8);
+}
+.navPagamento input[type=text] {
+  background-color: rgba(139, 247, 96, 0.8);
+  color: white;
+}
+.navPagamento input[type=text]::-webkit-input-placeholder {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+.navPagamento input[type=date] {
+  background-color: rgba(139, 247, 96, 0.8);
+  color: white;
+}
+
 .contentCamp {
   display: flex;
-  border: 1px solid black;
+  border: 1px solid #00e2ab;
   margin-bottom: 10px;
 }
 .contentCamp .tableWrapper {
@@ -9,7 +79,7 @@
   margin: 20px;
 }
 .contentCamp .tableWrapper .tableCampanha {
-  border: 1px solid black;
+  border: 1px solid #00e2ab;
   border-collapse: collapse;
   width: 800px;
 }
@@ -17,18 +87,22 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
-  background-color: black;
+  background-color: #49be70;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
   color: white;
   justify-content: center;
   align-items: center;
 }
 .contentCamp .tableWrapper .tableCampanha td {
   padding-left: 20px;
+  color: #11642d;
 }
 
 .contentCli {
   display: flex;
-  border: 1px solid black;
+  flex-direction: column;
+  border: 1px solid #00e2ab;
   margin-bottom: 10px;
 }
 .contentCli .tableWrapper {
@@ -38,7 +112,7 @@
   display: flex;
 }
 .contentCli .tableWrapper .tableCliente {
-  border: 1px solid black;
+  border: 1px solid #00e2ab;
   border-collapse: collapse;
   width: 1500px;
 }
@@ -46,10 +120,16 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0px;
-  background-color: black;
+  background-color: #49be70;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
   color: white;
   justify-content: center;
   align-items: center;
+}
+.contentCli .tableWrapper .tableCliente td {
+  padding-left: 20px;
+  color: #11642d;
 }
 
 #resultado {
@@ -58,15 +138,73 @@
   justify-content: space-between;
   padding: 0px 50px 0px 50px;
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 1px solid #00e2ab;
 }
 #resultado .display {
   display: flex;
   flex-direction: row;
+  color: #11642d;
 }
 #resultado .display span {
   margin-top: 23px;
-  color: red;
+  color: #00e2ab;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
+}
+
+.overRetorno {
+  position: absolute;
+  width: 99%;
+  height: 100%;
+  top: 0px;
+  background-color: rgba(0, 226, 169, 0.0549019608);
+  display: none;
+}
+.overRetorno #buscarRetorno {
+  margin: 120px 0px 0px 0px;
+}
+.overRetorno #margem {
+  height: 140px;
+}
+.overRetorno #margem div {
+  background-color: rgba(0, 226, 169, 0.0549019608);
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 5px 15px 0px;
+}
+.overRetorno .contentRetorno {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #00e2ab;
+  margin-top: 5px;
+  background-color: white;
+}
+.overRetorno .contentRetorno .tableWrapperRetorno {
+  max-height: 280px;
+  overflow-y: scroll;
+  margin: 20px;
+  display: flex;
+  background-color: white;
+}
+.overRetorno .contentRetorno .tableWrapperRetorno .tableRetorno {
+  border: 1px solid #00e2ab;
+  border-collapse: collapse;
+  width: 1500px;
+  background-color: white;
+}
+.overRetorno .contentRetorno .tableWrapperRetorno .tableRetorno th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  background-color: #11642d;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+.overRetorno .contentRetorno .tableWrapperRetorno .tableRetorno td {
+  color: #11642d;
+}
+
+.over_active {
+  display: block;
 }/*# sourceMappingURL=style.css.map */

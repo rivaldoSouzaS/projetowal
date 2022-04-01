@@ -47,10 +47,30 @@ app.get('/campanha', async (req, res) =>{
     }
 })
 
+app.get('/retorno', async (req, res) =>{
+    
+    try {
+        const result = await retornarRetorno()
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.get('/campanha', async (req, res) =>{
     
     try {
         const result = await retornarCampanhas()
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/campanha/valida', async (req, res) =>{
+    
+    try {
+        const result = await retornarCampanhasValidas()
         res.json(result.rows);
     } catch (error) {
         console.log(error)
@@ -105,11 +125,25 @@ async function retornarCampanhas(){
     return campanhas
 }
 
+async function retornarCampanhasValidas(){
+    const campanhas =  pool.query(
+        `SELECT * FROM campanha where validade = true`
+    )
+    return campanhas
+}
+
 async function retornarClientes(){
     const clientes =  pool.query(
         `SELECT * FROM cliente`
     )
     return clientes
+}
+
+async function retornarRetorno(){
+    const retorno =  await pool.query(
+        `SELECT * FROM retorno`
+    )
+    return retorno
 }
 
 async function quantClientes(idCampanha){
@@ -143,22 +177,19 @@ async function retornarCampanhasId(id){
 }
 
 async function inserir(id, lista){
-    
-    const clientes =  pool.query(
+    const clientes =  await pool.query(
         `INSERT INTO cliente (idCampanha, colaborador, idTitulo, nome, vencimento, pago) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
         [id, lista.Colaborador, lista.IDTitulo, lista.Cliente, lista.Vencimento, false]
     )
-    
 }
 
 async function inserirRetorno(id, lista){
     //console.log(lista.Cliente);
-    
-    const clientes =  pool.query(
-        `INSERT INTO retorno (campanha, titulo, nome) VALUES ($1, $2, $3) RETURNING *`,
-        [id, lista.ID, lista.Cliente]
+    const data = new Date();
+    const clientes =  await pool.query(
+        `INSERT INTO retorno (campanha, titulo, nome, dataretorno) VALUES ($1, $2, $3, $4) RETURNING *`,
+        [id, lista.ID, lista.Cliente, data]
     )
-    
 }
 
 async function criarCampanha(){
@@ -187,7 +218,7 @@ async function readExcelClientes(id, rout){
     const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
     
     for (let index = 0; index < dataExcel.length; index++) {
-        
+        console.log(dataExcel[index].Vencimento.toString().replace(' ','/'))
         await inserir(id, dataExcel[index])
     }
     
