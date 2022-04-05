@@ -3,11 +3,32 @@ const express = require('express')
 const cors = require('cors')
 const app = express();
 const pool = require('./db')
+//importar arquivo com muter
+const multer = require("multer")
+const path = require('path')
+
 
 app.use(express.json())
 app.use(cors())
 
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads/clientes')
+    },
+    filename: function(req, file, cb){
+        cb(null, 'clientes'+ path.extname(file.originalname))
+    }
+})
+
+const uploadCliente = multer({storage})
+
 //------------------------------------------rotas-----------------------------------------------
+app.post('/upload/clientes',uploadCliente.single("file"), (req, res) =>{
+    res.send("Arquivo recebido com sucesso!")
+    //console.log("merda")
+})
+
+
 app.post('/cliente/:id', async (req, res) =>{
 
     const id = req.params.id

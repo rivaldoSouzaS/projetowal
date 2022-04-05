@@ -2,6 +2,50 @@ body {
   background-color: rgba(0, 226, 169, 0.0549019608);
 }
 
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #49be70;
+  align-items: center;
+}
+header .contenFormulario {
+  margin-right: 5px;
+}
+header .contenFormulario input[type=file] {
+  display: none;
+}
+header .contenFormulario label {
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 15px;
+  padding: 5px 5px 5px 5px;
+  transition: 0.5s;
+}
+header .contenFormulario label:hover {
+  background-color: rgba(139, 247, 96, 0.8);
+  color: white;
+}
+header .contenFormulario input[type=submit] {
+  outline: none;
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: #49be70;
+  padding: 5px;
+}
+header .contenFormulario input[type=submit]:hover {
+  background-color: rgba(139, 247, 96, 0.8);
+}
+
 .contentNav {
   background-color: #49be70;
 }
