@@ -7,7 +7,6 @@ const pool = require('./db')
 const multer = require("multer")
 const path = require('path')
 
-
 app.use(express.json())
 app.use(cors())
 

@@ -201,7 +201,7 @@ header .contenFormulario input[type=submit]:hover {
   width: 99%;
   height: 100%;
   top: 0px;
-  background-color: rgba(0, 226, 169, 0.0549019608);
+  background-color: #00e24b;
   display: none;
 }
 .overRetorno #buscarRetorno {
