@@ -130,6 +130,14 @@
             <input id="dataRetorno" type="date" placeholder="yyy-mm-dd">
             <input id="buscarData" type="button" value="Buscar">
           </div>
+
+          <div class="contenFormulario">
+            <form action="http://localhost:3000/upload/retorno" method="post" enctype="multipart/form-data">
+              <label for="arquivoRetorno">Selecione arquivo</label>
+              <input id="arquivoRetorno" type="file" name="fileRetorno">
+              <input type="submit" value="Upload">
+            </form>
+          </div>
           
         </div>
         <div class="tableWrapperRetorno">

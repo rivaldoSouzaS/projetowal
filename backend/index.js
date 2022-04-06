@@ -20,22 +20,41 @@ const storage = multer.diskStorage({
     }
 })
 
+const storageRetorno = multer.diskStorage({
+    destination: function(req, file, cbr){
+        cbr(null, 'uploads/retorno')
+    },
+    filename: function(req, filer, cbr){
+        cbr(null, 'retorno'+ path.extname(filer.originalname))
+    }
+})
+
+/**depois que se cria a constante multer esse objeto que se passar como parametro 
+ * tem como chave a palavra storage e como valor a constante criada que recebe o 
+ * resultado do multer.diskStorage, presta atenção a isso.
+ */
+
 const uploadCliente = multer({storage})
+const updateRetorno = multer({storage:storageRetorno})
 
 //------------------------------------------rotas-----------------------------------------------
 app.post('/upload/clientes',uploadCliente.single("file"), (req, res) =>{
     res.send("Arquivo recebido com sucesso!")
-    //console.log("merda")
 })
 
+app.post('/upload/retorno',updateRetorno.single("fileRetorno"), (req, res) =>{
+    res.send("Arquivo retorno com sucesso!")
+})
 
 app.post('/cliente/:id', async (req, res) =>{
 
     const id = req.params.id
     const quantidade = await quantClientes(id);
     if(quantidade <= 0){
-        readExcelClientes(id, 'baseDados.xlsx')
+        
+        await readExcelClientes(id, 'uploads/clientes/clientes.xlsx')
         res.send(quantidade)
+        
     }
     else{
         res.send(quantidade);
@@ -51,7 +70,7 @@ app.post('/retorno/:id', async (req, res) =>{
     //console.log("metodo post")
     const id = req.params.id
     try {
-        readExcelRetorno(id, 'relatorio.xlsx')
+        await readExcelRetorno(id, 'uploads/retorno/retorno.xlsx')
         res.status(204).send()
     } catch (error) {
         res.status(500).send()
@@ -186,7 +205,7 @@ async function retornarClientesPago(idcampanha){
 async function retornarPorColab(nomeColab, idCampanha){
     //const result = await pool.query(`SELECT * FROM cliente WHERE cliente.colaborador Ilike '%ANTONIO CARLOS PEREIRA SOARES%';`)
     const result = await pool.query(`SELECT * FROM cliente WHERE cliente.colaborador Ilike '%${nomeColab}%';`)
-    console.log(result.rowCount+" CODIGO SQL");
+    //console.log(result.rowCount+" CODIGO SQL");
     return result
 }
 
@@ -239,7 +258,7 @@ async function readExcelClientes(id, rout){
     const dataExcel = XLSX.utils.sheet_to_json(workbook.Sheets[sheet])
     
     for (let index = 0; index < dataExcel.length; index++) {
-        console.log(dataExcel[index].Vencimento.toString().replace(' ','/'))
+        //console.log(dataExcel[index].Vencimento.toString().replace(' ','/'))
         await inserir(id, dataExcel[index])
     }
     

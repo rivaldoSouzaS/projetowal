@@ -248,6 +248,42 @@ header .contenFormulario input[type=submit]:hover {
 .overRetorno .contentRetorno .tableWrapperRetorno .tableRetorno td {
   color: #11642d;
 }
+.overRetorno .contentRetorno .contenFormulario {
+  margin-right: 5px;
+}
+.overRetorno .contentRetorno .contenFormulario input[type=file] {
+  display: none;
+}
+.overRetorno .contentRetorno .contenFormulario label {
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 15px;
+  padding: 5px 5px 5px 5px;
+  transition: 0.5s;
+}
+.overRetorno .contentRetorno .contenFormulario label:hover {
+  background-color: rgba(139, 247, 96, 0.8);
+  color: white;
+}
+.overRetorno .contentRetorno .contenFormulario input[type=submit] {
+  outline: none;
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: #49be70;
+  padding: 5px;
+}
+.overRetorno .contentRetorno .contenFormulario input[type=submit]:hover {
+  background-color: rgba(139, 247, 96, 0.8);
+}
 
 .over_active {
   display: block;

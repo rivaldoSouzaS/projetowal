@@ -3,6 +3,7 @@ body{
     background-color: #00e2a90e;
 }
 
+
 header{
     display: flex;
     flex-direction: row;
@@ -277,6 +278,48 @@ header{
                     color: #11642d;
                 }
                 
+            }
+        }
+
+        .contenFormulario{
+            margin-right: 5px;
+    
+            input[type=file] {
+                display: none;
+            }
+    
+            label{
+                box-sizing: border-box;
+                border-radius: 5px;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 20px;
+                font-weight: bold;
+                margin-left: 15px;
+                padding: 5px 5px 5px 5px;
+                transition: 0.5s;
+    
+                &:hover{
+                    background-color: #8bf760cc;
+                    color: white;
+                }
+            }
+    
+            input[type=submit]{
+                outline: none;
+                margin: 0px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 20px;
+                font-weight: bold;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                background-color: #49be70;
+                padding: 5px;
+        
+                &:hover{
+                    background-color: #8bf760cc;
+                }
             }
         }
     }
