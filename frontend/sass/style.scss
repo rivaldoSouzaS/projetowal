@@ -135,12 +135,14 @@ header{
     display: flex;
     border: 1px solid #00e2ab;
     margin-bottom: 10px;
+    min-height: 100px;
     .tableWrapper{
         max-height: 100px;
         overflow-y: scroll;
         margin: 20px;
         .tableCampanha{
             border: 1px solid #00e2ab;
+            border-bottom: none;
             border-collapse: collapse;
             width: 800px;
             
@@ -171,6 +173,7 @@ header{
     border: 1px solid #00e2ab;
     margin-bottom: 10px;
     //background-color: yellow;
+    min-height: 350px;
     .tableWrapper{
         max-height: 280px;
         overflow-y: scroll;
@@ -181,6 +184,7 @@ header{
             border: 1px solid #00e2ab;
             border-collapse: collapse;
             width: 1500px;
+            
 
             th{
                 position: sticky;
@@ -224,8 +228,9 @@ header{
 
 .overRetorno{
     position: absolute;
-    width: 99%;
-    height: 100%;
+    width: 98%;
+    height: 98%;
+    padding: 0px 5px 0px 5px;
     top: 0px;
     background-color: #00e24b;;
     display: none;
@@ -251,6 +256,7 @@ header{
         border: 1px solid #00e2ab;
         margin-top: 5px;
         background-color: white;
+        min-height: 350px;
 
         .tableWrapperRetorno{
             max-height: 280px;
@@ -262,7 +268,7 @@ header{
             .tableRetorno{
                 border: 1px solid #00e2ab;
                 border-collapse: collapse;
-                width: 1500px;
+                width: 100%;
                 background-color: white;
     
                 th{

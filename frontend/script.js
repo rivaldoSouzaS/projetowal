@@ -16,7 +16,7 @@ const coletarClientes = async()=>{
 
 const coletarRetorno = async()=>{
   const result = await axios.get(`http://localhost:3000/retorno`);
-  console.log(result.data)
+  //console.log(result.data)
   carregarTabelaRetorno(result.data);
 }
 
@@ -56,22 +56,43 @@ const carregarClientesPorColab = async()=>{
 }
 
 const carregarRetorno = async()=>{
-  if(idcampanha !== 0){
-    const result = await axios.post(`http://localhost:3000/retorno/${idcampanha}`);
+  const campanha = await campanhaPorId(idcampanha)
+  //console.log(campanha)
+  if(idcampanha !== 0 && campanha.data[0].validade !== false){
+    await axios.post(`http://localhost:3000/retorno/${idcampanha}`);
     idcampanha = 0;
   }
   else{
-    alert("selecione uma campanha!")
+    alert("selecione uma campanha valida!")
   }
 }
 
 const criarCampanha = async()=>{
-  const acmpanhas = await axios.get(`http://localhost:3000/campanha/valida`);
-  if(acmpanhas.data.length >= 1){
+  const campanhas = await axios.get(`http://localhost:3000/campanha/valida`);
+  if(campanhas.data.length >= 1){
     alert("Ja existe uma campanha valida")
   }
   else{
     const result = await axios.post(`http://localhost:3000/campanha`);
+  }
+}
+
+const campanhaPorId = async(id)=>{
+  try {
+    const campanha = await axios.get(`http://localhost:3000/campanha/${id}`);
+    return campanha
+  } catch (error) {
+    alert("Falha ao buscar campanha!")
+  }
+}
+
+const cancelarCampanha = async()=>{
+  if(idcampanha !== 0){
+    const result = await axios.put(`http://localhost:3000/campanha/${idcampanha}`);
+    alert("Campanha cancelada")
+  }
+  else{
+    alert("Selecione uma campanha")
   }
 }
 
@@ -109,8 +130,12 @@ document.getElementById('buscar').addEventListener('click', event =>{
 })
 
 document.getElementById('sairRetorno').addEventListener("click", event=>{
-  console.log("ok")
+  //console.log("ok")
   toggleOverRetorno()
+})
+
+document.getElementById('encerrarCampanha').addEventListener("click", event =>{
+  cancelarCampanha()
 })
 
 function carregarTabela(dadosTabela){
@@ -147,7 +172,6 @@ function desmarcarLinhasTabela(){
 }
 
 function carregarTabelaCliente(dadosTabela){
-    //console.log(dadosTabela)
     let trCli = '';
     calcularEficacia(dadosTabela)
     for (let index = 0; index < dadosTabela.length; index++) {
@@ -191,7 +215,6 @@ function calcularEficacia(dadosTabela){
     if(dadosTabela[index].pago === true){
       count = count + 1;
     }
-    
   }
   let eficacia = (count * 100) / quant
   document.getElementById('total').textContent = quant

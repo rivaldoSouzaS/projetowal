@@ -116,6 +116,7 @@ header .contenFormulario input[type=submit]:hover {
   display: flex;
   border: 1px solid #00e2ab;
   margin-bottom: 10px;
+  min-height: 100px;
 }
 .contentCamp .tableWrapper {
   max-height: 100px;
@@ -124,6 +125,7 @@ header .contenFormulario input[type=submit]:hover {
 }
 .contentCamp .tableWrapper .tableCampanha {
   border: 1px solid #00e2ab;
+  border-bottom: none;
   border-collapse: collapse;
   width: 800px;
 }
@@ -148,6 +150,7 @@ header .contenFormulario input[type=submit]:hover {
   flex-direction: column;
   border: 1px solid #00e2ab;
   margin-bottom: 10px;
+  min-height: 350px;
 }
 .contentCli .tableWrapper {
   max-height: 280px;
@@ -198,8 +201,9 @@ header .contenFormulario input[type=submit]:hover {
 
 .overRetorno {
   position: absolute;
-  width: 99%;
-  height: 100%;
+  width: 98%;
+  height: 98%;
+  padding: 0px 5px 0px 5px;
   top: 0px;
   background-color: #00e24b;
   display: none;
@@ -222,6 +226,7 @@ header .contenFormulario input[type=submit]:hover {
   border: 1px solid #00e2ab;
   margin-top: 5px;
   background-color: white;
+  min-height: 350px;
 }
 .overRetorno .contentRetorno .tableWrapperRetorno {
   max-height: 280px;
@@ -233,7 +238,7 @@ header .contenFormulario input[type=submit]:hover {
 .overRetorno .contentRetorno .tableWrapperRetorno .tableRetorno {
   border: 1px solid #00e2ab;
   border-collapse: collapse;
-  width: 1500px;
+  width: 100%;
   background-color: white;
 }
 .overRetorno .contentRetorno .tableWrapperRetorno .tableRetorno th {

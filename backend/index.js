@@ -65,12 +65,37 @@ app.post('/campanha', async (req, res) =>{
     res.send(id);
 })
 
+app.put('/campanha/:id', async (req, res) =>{
+    const id = req.params.id
+    const result = await retornarClientes();
+    const listaClientes = result.rows;
+    let cont = 0;
+    for (let index = 0; index < listaClientes.length; index++) {
+        if(listaClientes[index].pago === true){
+            cont = cont + 1;
+        }
+    }
+    let quantClientes = listaClientes.length
+    let quantPago = cont
+    let eficacia = (cont*100) /quantClientes;
+    eficacia = eficacia.toFixed(2)
+    //console.log(eficacia)
+
+    try {
+        await encerrarCampanha(id, eficacia);
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.post('/retorno/:id', async (req, res) =>{
     //console.log("metodo post")
     const id = req.params.id
-    try {
-        await readExcelRetorno(id, 'uploads/retorno/retorno.xlsx')
+    await readExcelRetorno(id,'uploads/retorno/retorno.xlsx')
         res.status(204).send()
+
+    try {
+        
     } catch (error) {
         res.status(500).send()
     }
@@ -117,9 +142,13 @@ app.get('/campanha/valida', async (req, res) =>{
 })
 
 app.get('/campanha/:id', async (req, res) =>{
-    console.log(req.params.id);
-    res.send();
-
+    const campId = req.params.id
+    try {
+        const result = await campanhaPorId(campId)
+        res.json(result.rows);
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 app.get('/cliente', async (req, res) =>{
@@ -167,6 +196,13 @@ async function retornarCampanhas(){
 async function retornarCampanhasValidas(){
     const campanhas =  pool.query(
         `SELECT * FROM campanha where validade = true`
+    )
+    return campanhas
+}
+
+async function campanhaPorId(id){
+    const campanhas =  pool.query(
+        `SELECT * FROM campanha where id = ${id}`
     )
     return campanhas
 }
@@ -225,7 +261,7 @@ async function inserir(id, lista){
 async function inserirRetorno(id, lista){
     //console.log(lista.Cliente);
     const data = new Date();
-    const clientes =  await pool.query(
+    const result =  await pool.query(
         `INSERT INTO retorno (campanha, titulo, nome, dataretorno) VALUES ($1, $2, $3, $4) RETURNING *`,
         [id, lista.ID, lista.Cliente, data]
     )
@@ -248,6 +284,10 @@ async function clientesPago(){
 */
 async function marcarPago(){
     const result = await pool.query(`update cliente set pago = true from retorno where cliente.idtitulo = retorno.titulo`)
+}
+
+async function encerrarCampanha(idCampanha, eficaciaCampanha){
+    const result = await pool.query(`update campanha set eficacia = ${eficaciaCampanha}, validade = false where id = ${idCampanha}`)
 }
 
 async function readExcelClientes(id, rout){
